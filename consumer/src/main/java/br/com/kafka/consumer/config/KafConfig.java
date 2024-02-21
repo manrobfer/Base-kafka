@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.RecordInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,5 +32,23 @@ public class KafConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
         factory.setConsumerFactory(consumerFactory);
         return factory;
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> consumerValid(ConsumerFactory<String, String> consumerFactory){
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
+        factory.setConsumerFactory(consumerFactory);
+        factory.setRecordInterceptor(messageValidator());
+        return factory;
+    }
+
+    private RecordInterceptor<String, String> messageValidator() {
+        return (validador, error) -> {
+            if(validador.value().contains("para")){
+                System.out.println(" >>> A palavra para está contida na mensagem");
+                return validador;
+            }
+            return validador;
+        };
     }
 }
