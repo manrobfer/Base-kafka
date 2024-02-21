@@ -1,0 +1,8 @@
+server:
+  port: 8001
+
+spring:
+   kafka:
+     producer:
+        boostrap-servers: localhost:29092
+
