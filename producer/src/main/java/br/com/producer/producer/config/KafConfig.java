@@ -16,7 +16,7 @@ import java.util.Map;
 public class KafConfig {
 
     private final KafkaProperties kafkaProperties;
-    @Bean
+
     public KafkaAdmin kafkaAdmin(){
         Map<String, Object> conf = new HashMap<>();
         conf.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
@@ -25,9 +25,9 @@ public class KafConfig {
     @Bean
     public KafkaAdmin.NewTopics topcis(){
         return new KafkaAdmin.NewTopics(
-                TopicBuilder.name("topico-projeto").partitions(2).replicas(1).build()
+                TopicBuilder.name("topico-projeto").partitions(2).replicas(1).build(),
+                TopicBuilder.name("topico-pessoa").partitions(2).replicas(1).build()
                 );
-
-    }
+             }
 
 }

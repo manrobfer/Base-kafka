@@ -19,9 +19,11 @@ public @interface CustomListener {
     String groupId() default "";
     @AliasFor(annotation = KafkaListener.class, attribute = "topics")
     String[] topics() default "topico-projeto";
-
     @AliasFor(annotation = KafkaListener.class, attribute = "containerFactory")
     String consumer() default "consumer";
+
+    @AliasFor(annotation = KafkaListener.class, attribute = "errorHandler")
+    String errorHandler() default "exceptionHandler";
 
 
 }
